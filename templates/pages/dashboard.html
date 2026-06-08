@@ -1,0 +1,33 @@
+{{ template "base" . }}
+{{ define "content" }}
+<div class="dashboard-grid">
+    <section>
+        <div class="card">
+            <h2>Active Targets</h2>
+            <table class="scan-table">
+                <thead>
+                    <tr>
+                        <th>Domain / IP</th>
+                        <th>Status</th>
+                        <th>Vulnerabilities</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="scan-list-body">
+                    </tbody>
+            </table>
+        </div>
+    </section>
+    <aside>
+        <div class="card">
+            <h3>Launch Target Scan</h3>
+            <form hx-post="/api/scans" hx-target="#scan-list-body" hx-swap="afterbegin" style="margin-top: 1rem;">
+                <label style="display:block; margin-bottom:0.5rem; color:var(--text-muted);">Target Vector Domain</label>
+                <input type="text" name="domain" placeholder="e.g., vulcan.internal.ke" required 
+                       style="width:100%; padding:0.5rem; background:#0b0f17; border:1px solid var(--border-color); color:#fff; border-radius:4px; margin-bottom:1rem; font-family:inherit;">
+                <button type="submit" class="btn" style="width: 100%;">Initialize Scan Engine</button>
+            </form>
+        </div>
+    </aside>
+</div>
+{{ end }}

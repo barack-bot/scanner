@@ -1,0 +1,24 @@
+{{ define "base" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ke-scan</title>
+    <link rel="stylesheet" href="/static/css/app.css">
+    <script src="/static/js/htmx.min.js" defer></script>
+</head>
+<body>
+    <header class="app-header">
+        <div class="brand" style="font-weight: bold; font-size: 1.2rem; color: var(--accent);">🛡️ ke-scan</div>
+        <nav class="app-nav">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/account">Settings</a>
+        </nav>
+    </header>
+    <main class="app-container">
+        {{ block "content" . }}{{ end }}
+    </main>
+</body>
+</html>
+{{ end }}

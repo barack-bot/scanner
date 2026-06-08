@@ -1,0 +1,48 @@
+{{ template "base" . }}
+{{ define "content" }}
+<div class="card page-header">
+    <div>
+        <h2>Scan Report: {{ .Scan.Domain }}</h2>
+        <p class="text-muted">Target IP: <code>{{ .Scan.TargetIP }}</code> | Executed: {{ .Scan.CreatedAt }}</p>
+    </div>
+    <div>
+        <span class="badge badge-success">Analysis Concluded</span>
+    </div>
+</div>
+<div class="dashboard-grid">
+    <section>
+        <div class="card">
+            <h3>Identified Logic Flaws & Vulnerability Pathways</h3>
+            <p class="text-muted" style="margin-bottom: 1.5rem;">Click an entry to inspect structural state assumptions and technical findings.</p>
+            <table class="scan-table interactive-table">
+                <thead>
+                    <tr>
+                        <th>Identifier</th>
+                        <th>Component</th>
+                        <th>Severity</th>
+                        <th>Impact Vector</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range .Findings }}
+                    <tr hx-get="/api/scans/finding/{{ .ID }}" hx-target="#finding-details-pane" hx-swap="innerHTML">
+                        <td><strong>{{ .CVEID }}</strong></td>
+                        <td><code>{{ .Component }}</code></td>
+                        <td><span class="severity-tag severity-{{ .Severity }}">{{ .Severity }}</span></td>
+                        <td class="text-muted">{{ .ShortImpact }}</td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <aside>
+        <div class="card sticky-pane" id="finding-details-pane">
+            <div class="empty-state">
+                <p>🕵️‍♂️ <strong>Inspector Idle</strong></p>
+                <p class="text-muted" style="font-size: 0.9rem; margin-top: 0.5rem;">Select an analyzed flaw record to examine active state payload verification parameters.</p>
+            </div>
+        </div>
+    </aside>
+</div>
+{{ end }}
